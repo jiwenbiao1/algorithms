@@ -1,5 +1,36 @@
 #include <iostream>
-//int RemoveDuplicateElement(int SortArray[],int arrayLength);
+#include <vector>
+using namespace std;
+
+int RemoveDuplicateElement(int SortArray[],int arrayLength);
+int RemoveDuplicateElement_Vector(std::vector<int>& sortVector);
+
+int main(int argc, char const *argv[])
+{
+
+	int TestArray[] = {1,1,2,3,3,4,5,6,6,6,6,6,7};	
+	
+	//test for RemoveDuplicateElement
+	/*int length = RemoveDuplicateElement(TestArray,sizeof(TestArray)/sizeof(int));
+	cout << "array implement:\t";
+	for (int i = 0; i < length; ++i)
+	{
+		std::cout<<TestArray[i]<<"\t";
+	}*/
+	
+
+	std::vector<int> v = std::vector<int>(TestArray,TestArray+sizeof(TestArray)/sizeof(int));
+	int length_Vector = RemoveDuplicateElement_Vector(v);
+	cout << "\n"<<"vector implement:\t";
+	for (std::vector<int>::iterator i = v.begin(); i != (v.begin() + length_Vector); ++i)
+	{
+		std::cout<<*i << "\t";
+	}
+	return 0;
+}
+
+
+
 
 //template<T>
 /*
@@ -10,7 +41,6 @@ return :数组大小
 遍历数组
 	1 index存储遍历删除后元素的下标索引
 	2 
-
  */
 int RemoveDuplicateElement(int SortArray[],int arrayLength){
 	if(arrayLength <= 0)
@@ -24,14 +54,14 @@ int RemoveDuplicateElement(int SortArray[],int arrayLength){
 	return index+1;
 }
 
-int main(int argc, char const *argv[])
-{
-
-	int TestArray[] = {1,1,2,3,3,4,5,6,6,6,6,6,7};	
-	int length = RemoveDuplicateElement(TestArray,sizeof(TestArray)/sizeof(int));
-	for (int i = 0; i < length; ++i)
+int RemoveDuplicateElement_Vector(std::vector<int>& sortVector){
+	if(sortVector.size() <= 0)
+		return -1;
+	std::vector<int>::iterator index = sortVector.begin();
+	for (std::vector<int>::iterator it = sortVector.begin(); it != sortVector.end(); ++it)
 	{
-		std::cout<<TestArray[i]<<"\t";
+		if(*index != *it)
+			*(++index) = *it;
 	}
-	return 0;
+	return (int)((index+1) - sortVector.begin() );
 }
