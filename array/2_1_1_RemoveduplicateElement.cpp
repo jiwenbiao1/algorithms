@@ -1,9 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
+#include <algorithm>
 using namespace std;
 
 int RemoveDuplicateElement(int SortArray[],int arrayLength);
 int RemoveDuplicateElement_Vector(std::vector<int>& sortVector);
+int RemoveDuplicateElement_STL(std::vector<int>& sortVector);
 
 int main(int argc, char const *argv[])
 {
@@ -20,7 +23,9 @@ int main(int argc, char const *argv[])
 	
 
 	std::vector<int> v = std::vector<int>(TestArray,TestArray+sizeof(TestArray)/sizeof(int));
-	int length_Vector = RemoveDuplicateElement_Vector(v);
+	//int length_Vector = RemoveDuplicateElement_Vector(v);
+	
+	int length_Vector = RemoveDuplicateElement_STL(v);
 	cout << "\n"<<"vector implement:\t";
 	for (std::vector<int>::iterator i = v.begin(); i != (v.begin() + length_Vector); ++i)
 	{
@@ -64,4 +69,12 @@ int RemoveDuplicateElement_Vector(std::vector<int>& sortVector){
 			*(++index) = *it;
 	}
 	return (int)((index+1) - sortVector.begin() );
+}
+
+
+int RemoveDuplicateElement_STL(std::vector<int>& sortVector){
+	if(sortVector.size() <= 0)
+		return -1;
+	
+	return distance(sortVector.begin(), unique(sortVector.begin(),sortVector.end()));
 }
